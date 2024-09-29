@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Editor from "@monaco-editor/react";
+import Editor from '@monaco-editor/react';
+import './App.css';
 import axios from 'axios';
 
 function App() {
@@ -9,8 +10,8 @@ function App() {
 
   const languages = [
     { id: '63', name: 'JavaScript' },
-    { id: '52', name: 'Python' },
-    { id: '50', name: 'C++' },
+    { id: '71', name: 'Python 3' },
+    { id: '54', name: 'C++' },
     // Add more languages as needed
   ];
 
@@ -24,27 +25,47 @@ function App() {
 
   const runCode = async () => {
     try {
-      const result = await axios.post('http://localhost:5000/run', {
+      const response = await axios.post('http://localhost:5000/run', {
         language_id: language,
-        source_code: code
+        source_code: code,
       });
-      setOutput(result.data.output);
+
+      const result = response.data;
+
+      let outputText = '';
+
+      if (result.stdout) {
+        outputText = result.stdout;
+      } else if (result.stderr) {
+        outputText = result.stderr;
+      } else if (result.compile_output) {
+        outputText = result.compile_output;
+      } else if (result.message) {
+        outputText = result.message;
+      } else {
+        outputText = 'No output available.';
+      }
+
+      setOutput(outputText);
     } catch (error) {
       console.error('Error executing code:', error);
+      setOutput('Error executing code.');
     }
   };
 
   return (
     <div className="App">
       <select onChange={handleLanguageChange} value={language}>
-        {languages.map(lang => (
-          <option key={lang.id} value={lang.id}>{lang.name}</option>
+        {languages.map((lang) => (
+          <option key={lang.id} value={lang.id}>
+            {lang.name}
+          </option>
         ))}
       </select>
       <Editor
-        height="90vh"
+        height="40vh"
         defaultLanguage="javascript"
-        defaultValue={code}
+        value={code}
         onChange={handleCodeChange}
         theme="vs-dark"
       />
