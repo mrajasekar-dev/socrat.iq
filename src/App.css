@@ -1,52 +1,93 @@
-.App {
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  height: 100vh;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .description-container {
-  background-color: #f3f4f6;
-  color: #333;
-  overflow-y: auto; /* Allows scrolling */
+  width: 40%;
   padding: 20px;
+  background-color: #f7f7f7;
+  border-right: 1px solid #e0e0e0;
 }
 
-.code-container {
-  background-color: #fff;
-  color: #333;
+.editor-container {
+  width: 60%;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
 }
 
-select, button, textarea {
-  padding: 8px 15px;
-  margin: 10px;
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.custom-select, .run-button {
+  padding: 10px 15px;
   border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #333;
   font-size: 16px;
+  border: 1px solid #ccc;
   outline: none;
 }
 
-button {
+.custom-select {
+  width: auto;
+  background-color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #e2e2e2;
+.run-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-textarea {
-  flex-grow: 1;
-  border: 1px solid #ccc;
+.run-button:hover {
+  background-color: #218838;
 }
 
 .editor {
-  height: 70vh;
-  border: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
 }
+
+.output-area {
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  resize: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
