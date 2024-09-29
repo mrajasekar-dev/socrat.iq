@@ -8,11 +8,21 @@ const CodeEditor = ({ code, setCode }) => {
 
   return (
     <Editor
-      height="50vh"
+      height="40vh"
       defaultLanguage="javascript"
       value={code}
       onChange={handleCodeChange}
       theme="vs-light"
+      options={{
+        minimap: { enabled: false }, // Disable minimap
+        scrollbar: {
+          vertical: 'auto', // Enable scroll only when needed
+          horizontal: 'auto',
+        },
+        scrollBeyondLastLine: false, // Prevent unnecessary extra scrolling
+        wordWrap: 'on', // Wrap words to prevent horizontal scrolling
+        automaticLayout: true, // Automatically adjust layout to the container
+      }}
       className="editor"
     />
   );

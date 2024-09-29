@@ -1,0 +1,45 @@
+.about-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-container h1 {
+    font-size: 32px;
+    color: #f89f1b;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .about-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .about-container p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .about-container ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .about-container li {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .about-container strong {
+    color: #f89f1b;
+  }
+  

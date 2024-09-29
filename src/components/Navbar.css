@@ -1,0 +1,70 @@
+/* Navbar Styling */
+.navbar {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f89f1b;
+    margin-left: 20px;
+    text-decoration: none; /* Remove underline */
+  }
+  
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .navbar-logo {
+    flex: 1; /* Allow the logo section to take up its space */
+  }
+  
+  .navbar-links {
+    display: flex;
+    justify-content: center; /* Center the links */
+    flex: 1; /* Make this section take up the space equally */
+  }
+  
+  .navbar-links a {
+    margin-left: 20px;
+    margin-right: 20px; /* Add space between links */
+    font-size: 16px;
+    color: #333333;
+    text-decoration: none;
+  }
+  
+  .navbar-links a:hover {
+    color: #f89f1b;
+  }
+  
+  .navbar-account {
+    flex: 1; /* Account section takes up space */
+    display: flex;
+    justify-content: flex-end; /* Align account to the right */
+    align-items: center;
+  }
+  
+  .navbar-account-icon {
+    font-size: 28px;
+    color: #333333;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .navbar-account-icon:hover {
+    color: #f89f1b;
+  }
+  
