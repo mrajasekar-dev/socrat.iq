@@ -54,25 +54,33 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <select onChange={handleLanguageChange} value={language}>
-        {languages.map((lang) => (
-          <option key={lang.id} value={lang.id}>
-            {lang.name}
-          </option>
-        ))}
-      </select>
-      <Editor
-        height="40vh"
-        defaultLanguage="javascript"
-        value={code}
-        onChange={handleCodeChange}
-        theme="vs-dark"
-      />
-      <button onClick={runCode}>Run</button>
-      <textarea readOnly value={output} />
+    <div className="App" style={{ display: 'flex', flexDirection: 'row' }}>
+      <div className="description-container" style={{ width: '50%', padding: '20px' }}>
+        <h1>Description</h1>
+        <p>This is where you can add the problem description or any other content you want on the left side of the screen. Adjust the content as needed.</p>
+      </div>
+      <div className="code-container" style={{ width: '50%' }}>
+        <select onChange={handleLanguageChange} value={language} className="custom-select">
+          {languages.map((lang) => (
+            <option key={lang.id} value={lang.id}>
+              {lang.name}
+            </option>
+          ))}
+        </select>
+        <Editor
+          height="80vh"
+          defaultLanguage="javascript"
+          value={code}
+          onChange={handleCodeChange}
+          theme="vs-light"
+          className="editor"
+        />
+        <button onClick={runCode} className="run-button">Run</button>
+        <textarea readOnly value={output} className="output-area" />
+      </div>
     </div>
   );
+  
 }
 
 export default App;

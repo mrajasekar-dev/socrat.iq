@@ -1,17 +1,33 @@
 .App {
   font-family: 'Arial', sans-serif;
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.description-container {
+  background-color: #f3f4f6;
+  color: #333;
+  overflow-y: auto; /* Allows scrolling */
   padding: 20px;
-  background-color: #f3f4f6; /* Light gray background */
-  color: #333; /* Dark gray text for better contrast */
+}
+
+.code-container {
+  background-color: #fff;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
 
 select, button, textarea {
   padding: 8px 15px;
   margin: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc; /* Lighter borders */
-  background-color: #fff; /* White background */
-  color: #333; /* Matching text color */
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
   font-size: 16px;
   outline: none;
 }
@@ -22,18 +38,15 @@ button {
 }
 
 button:hover {
-  background-color: #e2e2e2; /* Light gray background on hover */
+  background-color: #e2e2e2;
 }
 
 textarea {
-  width: 100%;
-  height: 200px; /* Set a fixed height */
-  background-color: #fff; /* White background */
-  color: #333; /* Dark text for readability */
+  flex-grow: 1;
   border: 1px solid #ccc;
 }
 
-/* Styling the editor specifically, if possible through props or additional CSS files */
 .editor {
+  height: 70vh;
   border: 1px solid #ccc;
 }
