@@ -17,7 +17,7 @@ function App() {
 
   const runCode = async () => {
     try {
-      const response = await axios.post('https://socrat-iq.vercel.app/api/run', {
+      const response = await axios.post('http://localhost:5000/run', {
         language_id: language,
         source_code: code,
       });
