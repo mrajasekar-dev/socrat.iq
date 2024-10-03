@@ -94,10 +94,12 @@ body {
 
 .run-button {
   background-color: #28a745;
-  color: #fff;
+  color: white;
   border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
 }
 
 .run-button:hover {
@@ -121,3 +123,17 @@ body {
   font-family: 'Courier New', Courier, monospace;
 }
 
+.ask-socrates-button {
+  background-color: #f89f1b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.ask-socrates-button:hover {
+  background-color: #e08b0c;
+}

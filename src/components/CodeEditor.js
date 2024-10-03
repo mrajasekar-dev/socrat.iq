@@ -14,14 +14,14 @@ const CodeEditor = ({ code, setCode }) => {
       onChange={handleCodeChange}
       theme="vs-light"
       options={{
-        minimap: { enabled: false }, // Disable minimap
+        minimap: { enabled: false },
         scrollbar: {
-          vertical: 'auto', // Enable scroll only when needed
+          vertical: 'auto',
           horizontal: 'auto',
         },
-        scrollBeyondLastLine: false, // Prevent unnecessary extra scrolling
-        wordWrap: 'on', // Wrap words to prevent horizontal scrolling
-        automaticLayout: true, // Automatically adjust layout to the container
+        scrollBeyondLastLine: false,
+        wordWrap: 'on',
+        automaticLayout: true,
       }}
       className="editor"
     />
