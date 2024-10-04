@@ -48,19 +48,25 @@ function App() {
 
   const askSocrates = async () => {
     try {
-      const prompt = `Analyze the following code: ${code}. Why might it be wrong or inefficient with respect to the given problem description?`;
+      const prompt = `Analyze the following code: ${code} and give a short thought-provoking comment that is a question. But the question has to lead the user to think better logic for the problem. It has to have a example output or something for reference. Just output the question alone in text. No formatting needed.`;
       const response = await axios.post(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY', // Replace YOUR_API_KEY
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBPubX2RA0djEjAdF8JCCjJRJqnwxcvIYw',
         {
-          prompt: { text: prompt },
-          temperature: 0.7,
-          top_p: 0.8,
+          contents: [
+            {
+              parts: [
+                { text: prompt }
+              ]
+            }
+          ]
         },
         {
           headers: { 'Content-Type': 'application/json' }
         }
       );
-      const socraticResponse = response.data?.generations[0]?.text || 'No response from Socrates.';
+      
+      // Handle the response based on the structure you provided
+      const socraticResponse = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Socrates.';
       return socraticResponse;
     } catch (error) {
       console.error('Error fetching Socratic response:', error);
