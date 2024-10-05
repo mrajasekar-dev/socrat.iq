@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 import About from './components/About';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AskSocratesModal from './components/AskSocratesModal'; // Import the modal
+import AskSocratesModal from './components/AskSocratesModal';
 
 function App() {
   const [language, setLanguage] = useState('63'); // Default to JavaScript
@@ -17,9 +17,13 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false); // State for showing the modal
 
+  const apiEndpoint = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:5000'
+  : 'https://socrat-iq.onrender.com';
+
   const runCode = async () => {
     try {
-      const response = await axios.post('https://socrat-iq.onrender.com/run', {
+      const response = await axios.post(`${apiEndpoint}/run`, {
         language_id: language,
         source_code: code,
       });
@@ -48,25 +52,11 @@ function App() {
 
   const askSocrates = async () => {
     try {
-      const prompt = `Analyze the following code: ${code} and give a short thought-provoking comment that is a question. But the question has to lead the user to think better logic for the problem. It has to have a example output or something for reference. Just output the question alone in text. No formatting needed.`;
-      const response = await axios.post(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBPubX2RA0djEjAdF8JCCjJRJqnwxcvIYw',
-        {
-          contents: [
-            {
-              parts: [
-                { text: prompt }
-              ]
-            }
-          ]
-        },
-        {
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
+      const response = await axios.post(`${apiEndpoint}/askSocrates`, {
+        code: code, // Pass the code from the state or editor
+      });
       
-      // Handle the response based on the structure you provided
-      const socraticResponse = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Socrates.';
+      const socraticResponse = response.data.response || 'No response from Socrates.';
       return socraticResponse;
     } catch (error) {
       console.error('Error fetching Socratic response:', error);

@@ -8,39 +8,36 @@ app.use(cors());
 app.use(express.json());
 
 const RAPIDAPI_HOST = 'judge0-ce.p.rapidapi.com';
-const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY; // Ensure you have this key in your .env file
+const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
+
+console.log('Server starting...'); // Debug: Server startup
 
 app.post('/run', async (req, res) => {
+  console.log('Received /run request:', req.body); // Debug: Incoming request
   const { language_id, source_code } = req.body;
 
   try {
-    // First API call: Submit the code for execution
+    console.log('Submitting code for execution...'); // Debug: Before submission
     const submissionResponse = await axios.post(
       `https://${RAPIDAPI_HOST}/submissions`,
-      {
-        language_id,
-        source_code,
-      },
+      { language_id, source_code },
       {
         headers: {
           'Content-Type': 'application/json',
           'x-rapidapi-host': RAPIDAPI_HOST,
           'x-rapidapi-key': RAPIDAPI_KEY,
         },
-        params: {
-          base64_encoded: 'false',
-          wait: 'false',
-          fields: '*',
-        },
+        params: { base64_encoded: 'false', wait: 'false', fields: '*' },
       }
     );
+    console.log('Submission response:', submissionResponse.data); // Debug: Submission response
 
     const { token } = submissionResponse.data;
 
-    // Function to poll the submission result
     const getSubmissionResult = async (token) => {
+      console.log('Polling for submission result...'); // Debug: Start polling
       while (true) {
-        // Second API call: Get the execution result
+        console.log('Fetching result for token:', token); // Debug: Each poll attempt
         const resultResponse = await axios.get(
           `https://${RAPIDAPI_HOST}/submissions/${token}`,
           {
@@ -48,34 +45,57 @@ app.post('/run', async (req, res) => {
               'x-rapidapi-host': RAPIDAPI_HOST,
               'x-rapidapi-key': RAPIDAPI_KEY,
             },
-            params: {
-              base64_encoded: 'false',
-              fields: '*',
-            },
+            params: { base64_encoded: 'false', fields: '*' },
           }
         );
+        console.log('Result response:', resultResponse.data); // Debug: Poll response
 
         const statusId = resultResponse.data.status.id;
-
-        // Status IDs 1 and 2 mean "In Queue" and "Processing"
         if (statusId !== 1 && statusId !== 2) {
+          console.log('Final result received'); // Debug: Final result
           return resultResponse.data;
         }
-
-        // Wait for 1 second before polling again
+        console.log('Waiting before next poll...'); // Debug: Before wait
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     };
 
     const resultData = await getSubmissionResult(token);
+    console.log('Sending final result to client:', resultData); // Debug: Before sending response
     res.json(resultData);
   } catch (error) {
-    console.error('Error executing code:', error);
+    console.error('Error executing code:', error); // Debug: Detailed error log
     res.status(500).send('Failed to execute code.');
+  }
+});
+
+app.post('/askSocrates', async (req, res) => {
+  console.log('Received /askSocrates request:', req.body); // Debug: Incoming request
+  const { code } = req.body;
+
+  const prompt = `Analyze the following code: ${code} and give a short thought-provoking comment that is a question. But the question has to lead the user to think better logic for the problem. It has to have an example output or something for reference. Just output the question alone in text. No formatting needed.`;
+
+  try {
+    console.log('Sending request to Gemini API...'); // Debug: Before API call
+    const response = await axios.post(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=' + process.env.GOOGLE_API_KEY,
+      {
+        contents: [{ parts: [{ text: prompt }] }]
+      },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+    console.log('Gemini API response:', response.data); // Debug: API response
+
+    const socraticResponse = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Socrates.';
+    console.log('Sending Socratic response to client:', socraticResponse); // Debug: Before sending response
+    res.json({ response: socraticResponse });
+  } catch (error) {
+    console.error('Error fetching Socratic response:', error); // Debug: Detailed error log
+    res.status(500).json({ error: 'Error fetching Socratic response.' });
   }
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`); // Debug: Server started
 });
