@@ -1,9 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa'; // Import FontAwesome for a cleaner profile icon
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
 import './Navbar.css';
+import { auth } from '../firebase';  // Firebase auth
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
+const Navbar = () => {
+  const [user] = useAuthState(auth);  // Get current user
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.signOut().then(() => {
+      navigate('/signin');
+    });
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -15,7 +27,27 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
           <Link to="/about">About</Link>
         </div>
         <div className="navbar-account">
-          <FaUserCircle className="navbar-account-icon" /> {/* Correct profile icon */}
+          {user ? (
+            <div className="profile-container">
+              <FaUserCircle 
+                className="navbar-account-icon" 
+                onClick={() => setMenuOpen(!menuOpen)} 
+              />
+              {menuOpen && (
+                <div className="dropdown-menu">
+                  <button onClick={handleLogout} className="dropdown-item">
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="auth-buttons">
+              <Link to="/signin" className="auth-link">Sign In</Link>
+              <span className="divider">or</span>
+              <Link to="/signup" className="auth-link signup-btn">Sign Up</Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

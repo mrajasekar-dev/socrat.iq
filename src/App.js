@@ -9,6 +9,8 @@ import About from './components/About';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AskSocratesModal from './components/AskSocratesModal';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 
 function App() {
   const [language, setLanguage] = useState('63'); // Default to JavaScript
@@ -70,28 +72,26 @@ function App() {
         <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         <div className={`container ${isMenuOpen ? 'shifted' : ''}`}>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <Description />
-                  <div className="editor-container">
-                    <div className="editor-header">
-                      <LanguageSelector language={language} setLanguage={setLanguage} setCode={setCode} />
-                      <button onClick={() => setShowModal(true)} className="ask-socrates-button">
-                        Ask Socrates
-                      </button>
-                      <button onClick={runCode} className="run-button">Run</button>
-                    </div>
-                    <CodeEditor code={code} setCode={setCode} />
-                    <OutputWindow output={output} />
+            <Route path="/" element={
+              <>
+                <Description />
+                <div className="editor-container">
+                  <div className="editor-header">
+                    <LanguageSelector language={language} setLanguage={setLanguage} setCode={setCode} />
+                    <button onClick={() => setShowModal(true)} className="ask-socrates-button">
+                      Ask Socrates
+                    </button>
+                    <button onClick={runCode} className="run-button">Run</button>
                   </div>
-                </>
-              }
-            />
+                  <CodeEditor code={code} setCode={setCode} />
+                  <OutputWindow output={output} />
+                </div>
+              </>
+            } />
             <Route path="/about" element={<About />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
           </Routes>
-
         </div>
         {showModal && (
           <AskSocratesModal

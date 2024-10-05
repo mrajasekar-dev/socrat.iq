@@ -1,70 +1,171 @@
 /* Navbar Styling */
 .navbar {
-    background-color: #ffffff;
-    color: #333333;
-    padding: 15px 30px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  }
+  background-color: #ffffff;
+  color: #333333;
+  padding: 15px 30px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-  .navbar-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #f89f1b;
-    margin-left: 20px;
-    text-decoration: none; /* Remove underline */
-  }
-  
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  
-  .navbar-logo {
-    flex: 1; /* Allow the logo section to take up its space */
-  }
-  
-  .navbar-links {
-    display: flex;
-    justify-content: center; /* Center the links */
-    flex: 1; /* Make this section take up the space equally */
-  }
-  
-  .navbar-links a {
-    margin-left: 20px;
-    margin-right: 20px; /* Add space between links */
-    font-size: 16px;
-    color: #333333;
-    text-decoration: none;
-  }
-  
-  .navbar-links a:hover {
-    color: #f89f1b;
-  }
-  
-  .navbar-account {
-    flex: 1; /* Account section takes up space */
-    display: flex;
-    justify-content: flex-end; /* Align account to the right */
-    align-items: center;
-  }
-  
-  .navbar-account-icon {
-    font-size: 28px;
-    color: #333333;
-    margin-right: 20px;
-    cursor: pointer;
-  }
-  
-  .navbar-account-icon:hover {
-    color: #f89f1b;
-  }
-  
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.navbar-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f89f1b;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.navbar-logo,
+.navbar-links {
+  flex: 1;
+}
+
+.navbar-links {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-links a {
+  margin: 0 20px;
+  font-size: 16px;
+  color: #333333;
+  text-decoration: none;
+}
+
+.navbar-links a:hover,
+.navbar-account-icon:hover {
+  color: #f89f1b;
+}
+
+.navbar-account,
+.auth-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.auth-link,
+.signup-btn {
+  font-size: 16px;
+  text-decoration: none;
+  margin: 0 5px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.auth-link {
+  color: #6a0dad;
+  border: 1px solid transparent;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.signup-btn {
+  background-color: #e08b0c;
+  color: white;
+  border: 1px solid #e08b0c;
+}
+
+.signup-btn:hover {
+  background-color: transparent;
+  color: #e08b0c;
+}
+
+.navbar-account-icon {
+  font-size: 28px;
+  color: #333333;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.profile-container {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 10px 15px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 16px;
+}
+
+.dropdown-item:hover {
+  background-color: #f89f1b;
+  color: white;
+}
+
+.auth-container {
+  margin: 0 auto;
+  padding: 40px;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h1 {
+  text-align: center;
+  color: #f89f1b;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container input {
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.auth-container button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #f89f1b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-container button:hover {
+  background-color: #e08b0c;
+}
+
+.divider {
+  margin: 0 10px;
+  color: #333333;
+}
