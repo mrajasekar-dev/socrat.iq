@@ -1,14 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const jsforce = require('jsforce');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
 const RAPIDAPI_HOST = 'judge0-ce.p.rapidapi.com';
 const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
+const PORT = process.env.PORT || 5000;
 
 console.log('Server starting...'); // Debug: Server startup
 
@@ -95,25 +99,38 @@ app.post('/askSocrates', async (req, res) => {
   }
 });
 
-app.post('/salesforce/auth', async (res) => {
-  try {
-    const authResponse = await axios.post('https://login.salesforce.com/services/oauth2/token', new URLSearchParams({
-      grant_type: 'password',
-      username: process.env.SALESFORCE_USERNAME,
-      password: process.env.SALESFORCE_PASSWORD,
-      client_id: process.env.SALESFORCE_CLIENT_ID,
-      client_secret: process.env.SALESFORCE_CLIENT_SECRET,
-    }));
+const username = process.env.SALESFORCE_USERNAME;
+const password = process.env.SALESFORCE_PASSWORD;
+const clientId = process.env.SALESFORCE_CLIENT_ID;
+const clientSecret = process.env.SALESFORCE_CLIENT_SECRET;
+const loginUrl = 'https://login.salesforce.com';
 
-    res.json(authResponse.data);
-  } catch (error) {
-    res.status(500).json({ error: 'Error during Salesforce authentication' });
+app.post('/salesforce/auth', async (req, res) => {
+  const { accountId } = req.body;
+
+  const conn = new jsforce.Connection({
+    oauth2: {
+      clientId: clientId,
+      clientSecret: clientSecret,
+      redirectUri: 'http://localhost:' + PORT + '/oauth2/callback'
+    },
+    loginUrl: loginUrl
+  });
+
+  try {
+    await conn.login(username, password);
+
+    console.log('Authenticated with Salesforce!');
+
+    const accountData = await conn.apex.get(`/accountData/${accountId}`);
+    res.status(200).json(accountData);
+
+  } catch (err) {
+    console.error('Error authenticating or fetching data from Salesforce:', err);
+    res.status(500).json({ error: 'Failed to authenticate or fetch data from Salesforce' });
   }
 });
 
-
-
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`); // Debug: Server started
 });
