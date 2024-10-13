@@ -123,6 +123,7 @@ app.post('/salesforce/auth', async (req, res) => {
     console.log('Authenticated with Salesforce!');
 
     const accountData = await conn.apex.get(`/accountData/${accountId}`);
+    console.log('account Data here: ' + accountData);
     res.status(200).json(accountData);
 
   } catch (err) {
