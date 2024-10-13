@@ -95,6 +95,24 @@ app.post('/askSocrates', async (req, res) => {
   }
 });
 
+app.post('/salesforce/auth', async (res) => {
+  try {
+    const authResponse = await axios.post('https://login.salesforce.com/services/oauth2/token', new URLSearchParams({
+      grant_type: 'password',
+      username: process.env.SALESFORCE_USERNAME,
+      password: process.env.SALESFORCE_PASSWORD,
+      client_id: process.env.SALESFORCE_CLIENT_ID,
+      client_secret: process.env.SALESFORCE_CLIENT_SECRET,
+    }));
+
+    res.json(authResponse.data);
+  } catch (error) {
+    res.status(500).json({ error: 'Error during Salesforce authentication' });
+  }
+});
+
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`); // Debug: Server started
