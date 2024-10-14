@@ -106,7 +106,9 @@ const clientSecret = process.env.SALESFORCE_CLIENT_SECRET;
 const loginUrl = 'https://login.salesforce.com';
 
 app.post('/salesforce/auth', async (req, res) => {
-  const { accountId } = req.body;
+  var { account_id } = req.body;
+  console.log(req.body);
+  console.log(`as: ${account_id}`);
 
   const conn = new jsforce.Connection({
     oauth2: {
@@ -122,8 +124,8 @@ app.post('/salesforce/auth', async (req, res) => {
 
     console.log('Authenticated with Salesforce!');
 
-    console.log('accountId'+accountId);
-    const accountData = await conn.apex.get(`/accountData/${accountId}`);
+    console.log('accountId'+account_id);
+    const accountData = await conn.apex.get(`/accountData/${account_id}`);
     console.log('account Data here: ' + accountData);
     res.status(200).json(accountData);
 
